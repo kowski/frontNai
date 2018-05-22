@@ -44,7 +44,7 @@
 			console.log(this.suppliers);
 			return(
 				<div>
-				<h1>Suppliers:</h1>
+				<h2>Suppliers:</h2>
 				{this.createSupplierBtt()}
 				<Table responsive>
 				<thead>

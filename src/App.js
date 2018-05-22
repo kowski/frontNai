@@ -7,6 +7,7 @@ import {
 }from 'react-router-dom';
 import ProductComponent from './Components/ProductComponent';
 import SupplierComponent from './Components/SupplierComponent';
+import Master from './Components/Master';
 import axios from 'axios';
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
     return (
       <Router>
       <div className="container">
+      <Master/>
       <Route exact path="/product" component={ProductComponent}/>
       <Route exact path="/supplier" component={SupplierComponent}/>
       </div>
