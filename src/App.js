@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -10,21 +10,14 @@ import SupplierComponent from './Components/SupplierComponent';
 import axios from 'axios';
 
 class App extends Component {
-  // constructor(){
-  //   super();
-  //   axios.get('https://api.github.com/users/maecapozzi')
-  //   .then(response => console.log(response))
-
-  // }
   render() {
-    return ( 
+    return (
       <Router>
       <div className="container">
       <Route exact path="/product" component={ProductComponent}/>
       <Route exact path="/supplier" component={SupplierComponent}/>
       </div>
       </Router>
-      
       );
     }
   }
