@@ -2,29 +2,29 @@
 		import axios from 'axios';
 		import {Button} from 'react-bootstrap';
 		import {Table} from 'react-bootstrap';
-		function Delete(id){
-			return(
-				<form onSubmit="">
-				<input type="text hidden" name="id" />
-				<Button type="submit" bsStyle="danger">Delete</Button>
-				</form>
-			);
-		}
-		function Edit(id){
-			return(
-				<Button bsStyle="info">Edit</Button>
-			)
-		}
 		class SupplierComponent extends Component{
 			state={
 				suppliers: []
-			} 
-			componentDidMount(){axios.get('https://jsonplaceholder.typicode.com/users')
+			}
+		componentDidMount(){axios.get('https://jsonplaceholder.typicode.com/users')
 			.then(res => {
 				const suppliers= res.data;
 				this.setState({suppliers});
 				console.log("suppliers:" + this.state.suppliers);
 			})
+		}
+
+		delete(id){
+			return(
+				<form onSubmit={this.handleSubmit}>
+				<Button type="submit" bsStyle="danger">Delete</Button>
+				</form>
+			);
+		}
+		edit(id){
+			return(
+				<Button bsStyle="info">Edit</Button>
+			)
 		}
 		handleSubmit = event =>{
 			event.prevenDefault();
@@ -33,18 +33,31 @@
 		getSuppliers(){
 			return this.suppliers;
 		}
+		createSupplierBtt(){
+			return(
+				<form id="createSupplierBtt" class="text-right">
+				<Button bsStyle="link">Create supplier</Button>
+				</form>
+			)
+		}
 		render(){
 			console.log(this.suppliers);
 			return(
+				<div>
+				<h1>Suppliers:</h1>
+				{this.createSupplierBtt()}
 				<Table responsive>
 				<thead>
 				<tr>
+				<th>ID</th>
 				<th>#</th>
-				<th>#</th>
+				<th></th>
+				<th></th>
 				</tr>
 				</thead>
-				{ this.state.suppliers.map(person => (<tbody><tr><td>{person.name}</td><Delete/><Edit/></tr></tbody>))}
+				{ this.state.suppliers.map(person => (<tbody><tr><td>{person.id}</td><td>{person.name}</td><td>{this.edit(person.id)}</td><td>{this.delete(person.id)}	</td></tr></tbody>))}
 				</Table>
+				</div>
 			)
 		}
 		}
