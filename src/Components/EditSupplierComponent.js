@@ -6,6 +6,7 @@ import { Form } from 'react-bootstrap';
 import { FormGroup } from 'react-bootstrap';
 import { FormControl } from 'react-bootstrap';
 import { ControlLabel } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import { Col } from 'react-bootstrap';
 import '../SupplierComponent.css';
 class EditSupplierComponent extends Component {
@@ -18,6 +19,7 @@ class EditSupplierComponent extends Component {
             company_name: '',
             contact_number: '',
             city: '',
+            redirect: false,
         }
     }
     componentWillMount() {
@@ -32,21 +34,23 @@ class EditSupplierComponent extends Component {
                 this.setState({ isLoading: false });
                 console.log(this.state);
                 console.log(res.data.id)
-                this.setState({ id: res.data.id }); 
-                this.setState({ company_name: res.data.company_name }); 
-                this.setState({ contact_number: res.data.contact_number }); 
-                this.setState({ city: res.data.city }); 
+                this.setState({ id: res.data.id });
+                this.setState({ company_name: res.data.company_name });
+                this.setState({ contact_number: res.data.contact_number });
+                this.setState({ city: res.data.city });
             })
     }
     handleSubmit = event => {
         event.preventDefault();
         console.log(this.state.company_name);
+        this.setState({ redirect: true });
         axios.put('http://localhost:8080/supplier', {
-            id:this.state.id,
+            id: this.state.id,
             company_name: this.state.company_name,
             contact_number: this.state.contact_number,
             city: this.state.city
         }).then(res => {
+            this.setState({ redirect: true });
             console.log(res);
             console.log(res.data);
         })
@@ -64,11 +68,13 @@ class EditSupplierComponent extends Component {
         this.setState({ contact_number: event.target.value });
     }
     render() {
+        const { redirect } = this.state;
         if (this.state.isLoading) {
             return (
                 <p>Loading</p>
             )
         }
+
         return (
             <div>
                 <h2>Update supplier</h2>
@@ -100,6 +106,9 @@ class EditSupplierComponent extends Component {
                     </FormGroup>
                     <Button bsStyle="primary" type="submit">Update Supplier</Button>
                 </Form>
+                {redirect && (
+                    <Redirect to={'/supplier'} />
+                )}
             </div>
         )
 

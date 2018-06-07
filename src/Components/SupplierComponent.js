@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import '../SupplierComponent.css';
 class SupplierComponent extends Component {
 	state = {
@@ -21,21 +22,26 @@ class SupplierComponent extends Component {
 	delete(id) {
 		return (
 			<form className="deleteBtSupplier" onSubmit={this.deleteSupplier(id)}>
-				<Button type="submit" bsStyle="danger">Delete</Button>
-			</form >
+				<Button type="submit" bsStyle="danger">Delete</Button> 
+					<Redirect to={'/supplier'} />  
+			</form > 
+			
 		);
 	}
 	edit(id) {
+		var path="/supplier/edit/".concat(id);
 		return (
-			<Link to="/supplier/edit/"><Button bsStyle="info">Edit</Button></Link>
+			<Link to={path}><Button bsStyle="info">Edit</Button></Link>
 		)
 	}
 	deleteSupplier = (param) => (event) => {
 		console.log(param);
 		event.preventDefault();
 		axios.delete('http://localhost:8080/supplier/'.concat(param)).then(res => {
-			console.log(res)
+			console.log(res); 
 		})
+		window.location.reload()
+
 	}
 	getSuppliers() {
 		return this.suppliers;
@@ -58,11 +64,12 @@ class SupplierComponent extends Component {
 						<tr>
 							<th>ID</th>
 							<th>Company name</th>
+							<th>City</th>
 							<th>Phone number</th>
 							<th></th>
 						</tr>
 					</thead>
-					{this.state.suppliers.map(person => (<tbody><tr><td>{person.id}</td><td>{person.company_name}</td><td>{person.contact_number}</td><td>{this.edit(person.id)} {this.delete(person.id)}	</td></tr></tbody>))}
+					{this.state.suppliers.map(person => (<tbody><tr><td>{person.id}</td><td>{person.company_name}</td><td>{person.city}</td><td>{person.contact_number}</td><td>{this.edit(person.id)} {this.delete(person.id)}	</td></tr></tbody>))}
 				</Table>
 			</div>
 		)
