@@ -1,10 +1,10 @@
-import React, { Component } from 'react'; 
+	import React, { Component } from 'react'; 
 
-class ProductComponent extends Component{
-	render(){
-		return(
-			<p>Product Component</p>
-			)
+	class ProductComponent extends Component{
+		render(){
+			return(
+				<p>Product Component</p>
+				)
+			}
 		}
-	}
-	export default ProductComponent;
+		export default ProductComponent;
